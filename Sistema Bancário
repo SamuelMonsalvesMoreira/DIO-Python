@@ -1,0 +1,52 @@
+# Samuel Monsalves Moreira
+
+menu = """
+[d] Depositar
+[s] Sacar
+[e] Extrato
+[q] Sair
+=> """
+
+valor = 0
+saldo = 0
+limite = 500
+extrato = ""
+numero_saques = 0
+LIMITE_SAQUES = 3
+
+while True:
+    opcao = input(menu)
+
+    if opcao.lower() == "d":
+        valor = float(input("Digite o valor do deposito: "))
+        if valor > 0:
+            saldo += valor
+            extrato += f"{valor:.2f}\n"
+            print(f"Deposito de R$ {valor:.2f} realizado com sucesso!")
+        else:
+            print("Operação falha!, Valor inválido!")
+
+    elif opcao.lower() == "s":
+        valor = float(input("Digite o valor do saque: "))
+        exedeu_saldo = valor > saldo
+        exedeu_limite = valor > limite
+        exedeu_saques = numero_saques >= LIMITE_SAQUES
+
+        if exedeu_saldo or exedeu_limite or exedeu_saques:
+            print("Operação falhou!! ")
+        elif valor > 0:
+            saldo -= valor
+            extrato += f"-{valor:.2f}\n"
+            numero_saques += 1
+            print(f"Saque de R$ {valor:.2f} realizado com sucesso!")
+        else:
+            print("Operação falha!, Valor inválido!")
+
+    elif opcao.lower() == "e":
+        print("\n =================EXTRATO==================")
+        print("Não foram realizadas movimentações." if not extrato else extrato)
+        print(f"Saldo: R$ {saldo:.2f} ")
+        print("================================================")
+
+    elif opcao.lower() == "q":
+        break
